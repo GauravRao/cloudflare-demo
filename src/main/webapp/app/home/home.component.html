@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-3">
+        <span class="hipster img-fluid rounded"></span>
+    </div>
+    <div class="col-md-9">
+        <h1 class="display-4">Welcome!</h1>
+        <p class="lead">This application is used to manage cloudflare apps</p>
+
+        <div [ngSwitch]="isAuthenticated()">
+            <div class="alert" *ngSwitchCase="true">
+                <h2 *ngIf="account">Clear cache</b></h2>
+
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>Cache cleared!</strong>
+                </div>
+                <div class="alert alert-danger" *ngIf="error" >
+                    <strong>An error has occurred!</strong> The cache could not be cleared.
+                </div>
+
+                <form name="form" role="form" (ngSubmit)="clearCache()" #passwordForm="ngForm">
+                    <button type="submit" [disabled]="passwordForm.form.invalid" class="btn btn-primary">Clear Cache</button>
+                </form>
+            </div>
+
+            <div class="alert alert-warning" *ngSwitchCase="false">
+                <span>Please contant your administrator for login details.</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.specbee.cloudflare"
+    },
+    "jhipsterVersion": "5.4.2",
+    "applicationType": "monolith",
+    "baseName": "cloudflare",
+    "packageName": "com.specbee.cloudflare",
+    "packageFolder": "com/specbee/cloudflare",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MWYxM2Y1YjkzOGFmOTQ0OWRlZDBkMDljMmY2Mzg4ZTFjZjQxNjc1YTEzOTczYWU2NmE4OGYyNmNmZjRhZDBhODEwZGNkOGM2YjY3MzA4OTk1NjQzNGU3OGJjYWM1OGMyMGY0NzBlNGNiYzRmMWMxMTdkNTM0YWMzYjczMDlhYjA=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false
+  }
+}

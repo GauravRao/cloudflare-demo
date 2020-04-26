@@ -1,0 +1,135 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# More information on profiles: https://www.jhipster.tech/profiles/
+# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+logging:
+    level:
+        ROOT: DEBUG
+        io.github.jhipster: DEBUG
+        com.specbee.cloudflare: DEBUG
+
+spring:
+    profiles:
+        active: dev
+        include:
+            - swagger
+            # Uncomment to activate TLS for the dev profile
+            #- tls
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false # we use Webpack dev server + BrowserSync for livereload
+    jackson:
+        serialization.indent_output: true
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/cloudflare?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password:
+        hikari:
+            auto-commit: false
+            data-source-properties:
+                cachePrepStmts: true
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: true
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        database: MYSQL
+        show-sql: true
+        properties:
+            hibernate.id.new_generator_mappings: true
+            hibernate.connection.provider_disables_autocommit: true
+            hibernate.cache.use_second_level_cache: true
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+            hibernate.cache.hazelcast.instance_name: cloudflare
+            hibernate.cache.use_minimal_puts: true
+            hibernate.cache.hazelcast.use_lite_member: true
+    liquibase:
+        contexts: dev
+    mail:
+        host: localhost
+        port: 25
+        username:
+        password:
+    messages:
+        cache-duration: PT1S # 1 second, see the ISO 8601 standard
+    thymeleaf:
+        cache: false
+
+server:
+    port: 7432
+
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+jhipster:
+    http:
+        version: V_1_1 # To use HTTP/2 you will need to activate TLS (see application-tls.yml)
+    cache: # Cache configuration
+        hazelcast: # Hazelcast distributed cache
+            time-to-live-seconds: 3600
+            backup-count: 1
+            management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
+                enabled: false
+                update-interval: 3
+                url: http://localhost:8180/mancenter
+    # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
+    cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+        allowed-headers: "*"
+        exposed-headers: "Authorization,Link,X-Total-Count"
+        allow-credentials: true
+        max-age: 1800
+    security:
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+                base64-secret: TUlJRXBRSUJBQUtDQVFFQTFleGdITzJlUVJndFJScDNMSDgvdzRqLzJJM1ZNd1FQNDZRVTlrZzVBMW5KT2ZZTG5TejJOQXlCYzZmL0kraityMThLZTdEbGg4Tzl3cVlOM1FNOGFXdkE0VjFvcGN6dE5ubzJlUEp4T2lJV2dGN3BCUldRZDhNU2QxcjZUbUUySnhneURUU29xMGxsRWE4NW1lUExFV3QwVmJBTVBlR045eEJ1bDZkc2tvOU5LdnhhM1V1TjJ6OGJqb3B4Q2sxeDlHMmQ2TWFOOGFXRkV3b1lzWCs2RkVVekhWZjUzNzFVK1ZJSDE4WTlIOUx0dHFOY0p1elZaV1JTYTNZbUNMSzVRQTFZS3BiU2ltbUI5UjRoeExaajE4ajcyRm44aUR3bHdqdkpERXVTOVllZ0drdTdSaERiNzNvRSt6ejRNbGltNVhOSmxBK3pJYjFrWVUwWU1kMkwvd0lEQVFBQkFvSUJBUUNGeVBCSzV5Z2ptWlVtTkdqM2dSVkZtalkzSG15SkhTODZ0SEVQblJkYXl4b1hqNUt2MTJDYUtJQUU3cm1Yb2EwMXpBQm9YcmNOY3hNSDJvV3RCTXNST3Z4RGRRRnZQM3ZTcUJmTkNBSmIwdG16cXFlY01HSkxJOG8ycnNUL283Z1VOd09HVXJweGROTXFmaVZONHJJcTBNTE9tK3pyL2xXa2Y3aEtTOENRM3IwcHBNNFdqbENDSmVXcjIyNUVTYXRCY3Y4ZkxWSEFvWlBidy9IOFBjcVgyODcxM2cxZTZiYkMxR09ZdlkvRVJ6RXJ3SzdlZXI5dXIyR0krd1luU3NDOEpiLzN0VGplYXVDc2FZNHNPS3ozT2pXS2hWck5EMElMSWRxWjBTRVNNMTYrMnZBY2lVckVlZEJ1TXlOd21vYnlwQTRaWVZXb1BqVUN5bXdyQ0MyQkFvR0JBTzRTdkJubDVrSnpoT3NTTUt5UmNRK084UUJUTVJLUGhrSlQrU2ZzN0xqZXVsT3l1MjJ6cXY1Z0RvMnpGYXE5eVhOZEhtRm55U0NGdE53ajMzYjQ4RWNzODg5aU0zMWl4cEJCOENCaWZYTTBMRnhnWEF4VDdQay95dHN4MitHQmlHKytEOVp1U1lJazA2clVOWVZjYmVxcUo4ZTFlZFlaVXhpdUo5MUROK0VoQW9HQkFPWUlISWN6WjdMcFhoTHhpMXczRFpTN2hLSEVvRlR1MlhibnBFTFR2YktKU1d2eEdFWVY2cHBnbEhLMEYycDFsTVNZdmlPcDFKVVNqMzVTZ05ETStLWUdCSHdFN2Yyek9YZCtrdnpXaEs4N01oeFk3bG80MFl2MWdaaGZRUEU2dEpmRXEyMzR2SXlwSjZvVzBTdzdaeGk5bCszZDhIbHkzNTBIaUd4NnF5a2ZBb0dCQU9KM2crT0c1R0MyRHV5bVl4TGxUNDJqUmZJdk1QRWRBblE1K1R0WGoxL1V6NTRxMlV4anF2ZExYTXpDWEl3TStZTDZRNW9ZNWlRL3pHblUzaEFJZ2xqU2xDTGtvV0pYQWRmY1FaWXMyblVxWGtDSmtVWlExNDNLZHlmSDZBZzk5aEdGMVA3LzdvRVVreDFmdklIZUNOay9mNVBrTjcvSVcxbVE0VzhETURiQkFvR0FGVzJpQXJJMk1jTnRnUVJCUUNqY3VnTXgyc1B2VDVva1plQTBQQWx2ZldjdWtNQ1h5MGVWWUNZcERmcGF5QThGK2I1a3ovdXRFdW4wdGdiSGV5dnM2Y0pidnBYUytiUXRZVVZJT2dkZHV0a2YxT1l2NWZXdkI0T3FPK0I3c3owTnY2bVJjcUFlS0ZoRm1xR2ZnS2hUOVVrTUV4dCtvRUdrTlFPVG9NOVlqRzhDZ1lFQTF5elB2Q245QkNQWmRTeGxPVnJJemE0K2Juc2NMbzRITE1nRVdHc2J1djFKMlF3NnAzTjN2L1pSUFZHRWhjL2FiRmw4S2l3RU4zWGhaTWRjWnJIaExsZ1JpNnh4Wjc4MGdySHVtaWdHQ2hzUk9QVlRqaDB0SDV1R0FVTU1uaHRsOEJaU2l6UVhjREdlWHNTYlpMT05zNzBVeEt3Z3RTOUE4SWNWeExGSHg3ST0K
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+                token-validity-in-seconds-for-remember-me: 2592000
+    mail: # specific JHipster mail property, for standard properties see MailProperties
+        from: cloudflare@localhost
+        base-url: http://127.0.0.1:8080
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx:
+            enabled: true
+        logs: # Reports Dropwizard metrics in the logs
+            enabled: false
+            report-frequency: 60 # in seconds
+    logging:
+        logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+            enabled: false
+            host: localhost
+            port: 5000
+            queue-size: 512
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# application:
